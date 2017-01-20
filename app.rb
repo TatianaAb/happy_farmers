@@ -18,10 +18,27 @@ PARSED_DATA = JSON.parse(response)  # gives you array of hashes
 PARSED_DATA.select { |each_hash| each_hash["facilitycity"] == "Manhattan" }
 
 # Get User Input
+puts "Welcome to Happy Farmers B(-_-)B"
 
+
+puts "What can I help you with?"
+puts "A. Find Market by zip code"
+puts "B. Find Markets in your borough"
+puts "C. Search Market by name"
+
+response = gets.chomp.upcase
+
+case response
+when 'A'
+  puts "Please enter your zip code"
+  zipcode = gets.chomp
+when 'B'
+  puts "Please enter a borough name"
+  borough = gets.chomp
+when 'C'
+  puts "Please enter market name"
+  market_name = gets.chomp
+end
 
 #
 
-
-[ {   },
-]
