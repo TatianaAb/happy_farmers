@@ -2,6 +2,7 @@ require 'open-uri'
 require 'json'
 require 'pry'
 require 'yaml'
+require 'faker'
 require_relative 'display'
 require_relative 'reset'
 
@@ -59,6 +60,7 @@ loop do
   puts"Please enter a letter"
   puts
   response = gets.chomp.upcase
+  puts
 
   #while true
 
@@ -82,27 +84,28 @@ loop do
   when "EXIT"
     break
   else
+    reset_screen
     puts
     puts "Now... why would you do that?.."
     puts
     sleep(1)
     puts "Please enter an option we recognize!"
     puts
-    sleep(5)
+    loading_error
   end
 
   if !parameter_array.nil?
     reset_screen
     puts sign
     print_result(parameter_array)
+    puts
+    puts
+    puts "Would you like to continue or exit?"
+    if gets.chomp.downcase == "exit"
+      break
+    end
   end
 
-  puts
-  puts
-  puts "Would you like to continue or exit?"
-  if gets.chomp.downcase == "exit"
-    break
-  end
 end
 
 

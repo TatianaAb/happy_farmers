@@ -1,3 +1,5 @@
+require 'faker'
+
 def reset_screen
   clear_screen
   move_to_home
@@ -25,7 +27,7 @@ def loading
   puts "I know you appreciated that moment of serenity"
   sleep(2)
 
-  5.times do |t|
+  3.times do |t|
     puts
     puts "HA"
     sleep (1)
@@ -34,10 +36,6 @@ end
 
 def loading_error
   puts
-  puts "While we wait for it to reload because of your error.."
-  puts "Here's a Chuck Norris fact.."
-  puts "Did you know.."
-  puts ""
   print "loading"
   6.times do |t|
     print '.'
@@ -45,7 +43,15 @@ def loading_error
   end
   puts
   puts
-  puts "I know you appreciated that moment of serenity"
+  puts
+  puts "While we wait for it to reload.."
+  puts
+  puts "Here's a Chuck Norris fact.."
+  puts
+  puts "Did you know.."
+  puts
+  puts Faker::ChuckNorris.fact
+
   sleep(2)
 
   5.times do |t|
