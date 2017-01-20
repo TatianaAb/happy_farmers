@@ -2,6 +2,10 @@ require 'open-uri'
 require 'json'
 require 'pry'
 require 'yaml'
+require_relative 'display'
+require_relative 'reset'
+
+
 
 market_data = []
 
@@ -17,8 +21,7 @@ PARSED_DATA = JSON.parse(response)  # gives you array of hashes
 # test case when search by borough == Manhattan
 PARSED_DATA.select { |each_hash| each_hash["facilitycity"] == "Manhattan" }
 
-# Get User Input
-
+# Welcome
 sign =
 " .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
 | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
@@ -32,59 +35,40 @@ sign =
 | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' "
 
+reset_screen
 puts sign
 
 puts "Welcome to Happy Farmers B(-_-)B"
-
-
-puts "What can I help you with?"
-puts "A. Find Markets in your borough"
-puts "B. Find Market by zip code"
-puts "C. Search Market by name"
-
 puts
-puts"Please enter a letter"
-puts
-response = gets.chomp.upcase
+puts "Your ultimate resource to locate awesome farmer markets!!!"
+loading
 
-# case response
-# when 'A'
-#   puts "Please enter your zip code"
-#   zipcode = gets.chomp
-# when 'B'
-#   puts "Please enter a borough name"
-#   borough = gets.chomp.capitalize
-# when 'C'
-#   puts "Please enter market name"
-#   market_name = gets.chomp.capitalize
-# end
+loop do
+  reset_screen
+  puts sign
+  puts
+  puts "What can I help you with? Please enter a letter or 'exit' to quit"
+  puts
+  puts "A. Find Markets in your borough"
+  puts "B. Find Markets by zip code"
+  puts "C. Search Market by name"
+  puts "or exit"
 
+  # Get User Input
+  puts
+  puts"Please enter a letter"
+  puts
+  response = gets.chomp.upcase
 
-# The following methods will help us
-# to update the screen when printing the board.
-# We don't need to test these methods.
+  #while true
 
-def reset_screen
-  clear_screen
-  move_to_home
-end
+  parameter_array = nil
 
-# Clears the content on the screen. Ah, a fresh canvas.
-def clear_screen
-  print "\e[2J"
-end
-
-# Moves the insert point in the terminal back to the upper left.
-def move_to_home
-  print "\e[H"
-end
-
-#while true
   case response
   when "A"
     puts "Please enter a borough name"
-    borough = gets.chomp.downcase
-    parameter_array = PARSED_DATA.select {|param| param["facilitycity"].downcase == borough}
+    borough = gets.chomp.capitalize
+    parameter_array = PARSED_DATA.select {|param| param["facilitycity"] == borough}
   when "B"
     puts "Please enter your zip code"
     zipcode = gets.chomp
@@ -95,14 +79,31 @@ end
     parameter_array = PARSED_DATA.select do |param|
       param["facilityname"].downcase.include?(market_name)
     end
-  when "exit"
-    # break
+  when "EXIT"
+    break
   else
-    puts "Unrecognized request"
+    puts
+    puts "Now... why would you do that?.."
+    puts
+    sleep(1)
+    puts "Please enter an option we recognize!"
+    puts
+    sleep(5)
   end
-  p parameter_array
+
+  if !parameter_array.nil?
+    reset_screen
+    puts sign
+    print_result(parameter_array)
+  end
+
+  puts
+  puts
+  puts "Would you like to continue or exit?"
+  if gets.chomp.downcase == "exit"
+    break
+  end
+end
 
 
-  # reset_screen
-#end
 
