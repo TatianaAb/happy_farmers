@@ -25,3 +25,6 @@ PARSED_DATA.select { |each_hash| each_hash["facilitycity"] == "Manhattan" }
 
 [ {   },
 ]
+
+
+
